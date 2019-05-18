@@ -13,6 +13,18 @@ class App extends Component {
     generatedNumbers: [],
     amountToGenerate: 50,
     totalGenerated: 0,
+    minMax: '',
+    minMaxValue: null,
+  }
+
+  componentDidMount(){
+    const numGenerated = localStorage.getItem('phoneGenerator');
+    if (numGenerated){
+      const totalGenerated = parseInt(JSON.parse(numGenerated), 10);
+        this.setState({ totalGenerated: totalGenerated });
+      } else {
+        this.setState({ totalGenerated: 0 });
+      }
   }
 
   generateNumbers = () => {
@@ -23,7 +35,12 @@ class App extends Component {
         totalGenerated: prevState.totalGenerated + 50,
         generatedNumbers
       }
-    });
+    }, this.updateLocalStore);
+  }
+
+  updateLocalStore = () => {
+    const { totalGenerated } = this.state;
+    localStorage.setItem('phoneGenerator', JSON.stringify(totalGenerated));
   }
 
   sortNumbers = (type) => {
@@ -39,7 +56,33 @@ class App extends Component {
 
   }
 
+  getMinMax = (type) => {
+    const { generatedNumbers } = this.state;
+    if (type === 'Max'){
+      const maxNum = Math.max(...generatedNumbers);
+      this.setState({
+        minMax: 'Max',
+        minMaxValue: maxNum,
+      });
+    }
+    else if (type === 'Min'){
+      const minNum = Math.min(...generatedNumbers);
+      this.setState({
+        minMax: 'Min',
+        minMaxValue: minNum,
+      });
+    }
+  }
+
+  clearMinMax = () => {
+    this.setState({
+        minMax: '',
+        minMaxValue: null,
+      });
+  }
+
   generatedNumbers() {
+    const { minMax, minMaxValue } = this.state;
     const genExtra = () => (
       <Icon
         type="download"
@@ -78,12 +121,15 @@ class App extends Component {
         >
           <Panel header="Mavis Couture" key="1" extra={genExtra()}>
             <div className="nums-controls">
-              <div>
-                <span>Max</span>
-                <span>Min</span>
+              <div className='max-btn'>
+                <Tag onClick={() => this.getMinMax('Max')} color={ minMax === 'Max' && '#30021E' }>Max</Tag>
+                <Tag onClick={() => this.getMinMax('Min')} color={ minMax === 'Min' && '#30021E' }>Min</Tag>
+                {minMaxValue && <Tag closable onClose={this.clearMinMax}>{ '0' + minMaxValue}</Tag>}
               </div>
               <div>
-                <span>Sort:</span> {upArrow()}{downArrow()}
+                <span className="control-items">Sort:</span>
+                <span className="control-items">{upArrow()}</span>
+                <span className="control-items">{downArrow()}</span>
               </div>
             </div>
             <div className="nums-container">
@@ -97,7 +143,7 @@ class App extends Component {
 
   renderNumbers() {
     const { generatedNumbers } = this.state;
-    return generatedNumbers.map(number => <Tag key={number} color="purple">{ "0" + number }</Tag>);
+    return generatedNumbers.map(number => <Tag key={number}>{ "0" + number }</Tag>);
   }
 
   render() {
@@ -122,7 +168,7 @@ class App extends Component {
         </div>
         <section className="reset-section">
           <Icon onClick={() => this.generateNumbers()} className="reset-icon" type="reload" />
-          <p className="reset-text">Reload</p>
+          <p className="reset-text">Reset</p>
         </section>
         <footer>
           <p>&copy;2019 LMS Output</p>
