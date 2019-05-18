@@ -91,3 +91,13 @@ footer {
   justify-content: space-between;
   margin-bottom: 1em;
 }
+
+.control-items {
+  font-weight: 900;
+  font-size: 1.2em;
+  padding-right: 10px;
+}
+
+.max-btn {
+  padding-left: 10px;
+}
