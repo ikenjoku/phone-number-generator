@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Collapse, Icon, Select, Tag, Input } from 'antd';
+import { Collapse, Icon, Tag } from 'antd';
+import FileSaver from 'file-saver';
 import ClientForm from './component/clientForm';
 import 'antd/dist/antd.css';
 import './App.css';
 
 import { generatePhoneNumbers, sortNumbers } from "./utils/phoneNumberGenerator";
-
 const { Panel } = Collapse;
-const { Option } = Select;
-const { Search } = Input;
-
 
 class App extends Component {
   state = {
@@ -18,17 +15,17 @@ class App extends Component {
     totalGenerated: 0,
     minMax: '',
     minMaxValue: null,
-    companyName: "Mavis Couture",
+    companyName: "",
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const numGenerated = localStorage.getItem('phoneGenerator');
-    if (numGenerated){
+    if (numGenerated) {
       const totalGenerated = parseInt(JSON.parse(numGenerated), 10);
-        this.setState({ totalGenerated: totalGenerated });
-      } else {
-        this.setState({ totalGenerated: 0 });
-      }
+      this.setState({ totalGenerated: totalGenerated });
+    } else {
+      this.setState({ totalGenerated: 0 });
+    }
   }
 
   generateNumbers = () => {
@@ -55,21 +52,16 @@ class App extends Component {
     }
   }
 
-  onClickCollapseHeader(key) {
-    console.log(key);
-
-  }
-
   getMinMax = (type) => {
     const { generatedNumbers } = this.state;
-    if (type === 'Max'){
+    if (type === 'Max') {
       const maxNum = Math.max(...generatedNumbers);
       this.setState({
         minMax: 'Max',
         minMaxValue: maxNum,
       });
     }
-    else if (type === 'Min'){
+    else if (type === 'Min') {
       const minNum = Math.min(...generatedNumbers);
       this.setState({
         minMax: 'Min',
@@ -80,18 +72,21 @@ class App extends Component {
 
   clearMinMax = () => {
     this.setState({
-        minMax: '',
-        minMaxValue: null,
-      });
+      minMax: '',
+      minMaxValue: null,
+    });
   }
 
   generatedNumbers() {
-    const { minMax, minMaxValue, companyName } = this.state;
+    const { minMax, minMaxValue, companyName, generatedNumbers } = this.state;
     const genExtra = () => (
       <Icon
         type="download"
         className="control-items"
         onClick={event => {
+          const numbersToDownload = generatedNumbers.map(number => `0${number} \n`);
+          var blob = new Blob(numbersToDownload, { type: "text/plain;charset=utf-8" });
+          FileSaver.saveAs(blob, `${companyName}.txt`);
           event.stopPropagation();
         }}
       />
@@ -127,9 +122,9 @@ class App extends Component {
           <Panel header={companyName} key="1" extra={genExtra()}>
             <div className="nums-controls">
               <div className='max-btn'>
-                <Tag className='minmax-tag' onClick={() => this.getMinMax('Max')} color={ minMax === 'Max' && '#30021E' }>Max</Tag>
-                <Tag className='minmax-tag' onClick={() => this.getMinMax('Min')} color={ minMax === 'Min' && '#30021E' }>Min</Tag>
-                {minMaxValue && <Tag closable onClose={this.clearMinMax}>{ '0' + minMaxValue}</Tag>}
+                <Tag className='minmax-tag' onClick={() => this.getMinMax('Max')} color={minMax === 'Max' && '#30021E'}>Max</Tag>
+                <Tag className='minmax-tag' onClick={() => this.getMinMax('Min')} color={minMax === 'Min' && '#30021E'}>Min</Tag>
+                {minMaxValue && <Tag closable onClose={this.clearMinMax}>{'0' + minMaxValue}</Tag>}
               </div>
               <div>
                 <span className="control-items">Sort:</span>
@@ -148,7 +143,7 @@ class App extends Component {
 
   renderNumbers() {
     const { generatedNumbers } = this.state;
-    return generatedNumbers.map(number => <Tag className='num' key={number}>{ "0" + number }</Tag>);
+    return generatedNumbers.map(number => <Tag className='num' key={number}>{"0" + number}</Tag>);
   }
 
   handleFormSubmission = (values) => {
@@ -180,7 +175,7 @@ class App extends Component {
             <section className="stat-section">
               <p className="stat-text">Phone numbers generated to date: {totalGenerated}</p>
             </section>
-            { !generatedNumbers.length ?
+            {!generatedNumbers.length ?
               (
                 <section>
                   <ClientForm onSubmit={this.handleFormSubmission} />
@@ -195,12 +190,12 @@ class App extends Component {
           </main>
         </div>
         <section className="reset-section">
-        { generatedNumbers.length > 0 &&
-          <React.Fragment>
-            <Icon onClick={() => this.resetGenerator()} className="reset-icon" type="reload" />
-            <p className="reset-text">Reset</p>
-          </React.Fragment>
-        }
+          {generatedNumbers.length > 0 &&
+            <React.Fragment>
+              <Icon onClick={() => this.resetGenerator()} className="reset-icon" type="reload" />
+              <p className="reset-text">Reset</p>
+            </React.Fragment>
+          }
         </section>
         <footer>
           <p>&copy;2019 LMS Output</p>
