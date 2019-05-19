@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/phone-number-generator/static/css/main.54a4775f.chunk.css",
+    "main.js": "/phone-number-generator/static/js/main.ea3ef665.chunk.js",
+    "main.js.map": "/phone-number-generator/static/js/main.ea3ef665.chunk.js.map",
+    "runtime~main.js": "/phone-number-generator/static/js/runtime~main.8326a96b.js",
+    "runtime~main.js.map": "/phone-number-generator/static/js/runtime~main.8326a96b.js.map",
+    "static/css/2.1ad4406c.chunk.css": "/phone-number-generator/static/css/2.1ad4406c.chunk.css",
+    "static/js/2.befd969e.chunk.js": "/phone-number-generator/static/js/2.befd969e.chunk.js",
+    "static/js/2.befd969e.chunk.js.map": "/phone-number-generator/static/js/2.befd969e.chunk.js.map",
+    "index.html": "/phone-number-generator/index.html",
+    "precache-manifest.ac5ad7bc5e97606d479c2f687044f1b4.js": "/phone-number-generator/precache-manifest.ac5ad7bc5e97606d479c2f687044f1b4.js",
+    "service-worker.js": "/phone-number-generator/service-worker.js",
+    "static/css/2.1ad4406c.chunk.css.map": "/phone-number-generator/static/css/2.1ad4406c.chunk.css.map",
+    "static/css/main.54a4775f.chunk.css.map": "/phone-number-generator/static/css/main.54a4775f.chunk.css.map"
+  }
+}
