@@ -85,7 +85,7 @@ footer {
 }
 
 .app-container {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 221px);
 }
 
 .nums-container {
@@ -125,4 +125,39 @@ footer {
   .control-items, .num, .minmax-tag {
     font-size: 1.5em;
   }
+}
+
+@media screen and (min-width: 570px) {
+  .ant-form-inline .ant-form-item > .ant-form-item-control-wrapper, .ant-form-inline .ant-form-item > .ant-form-item-label {
+    width: 100%
+  }
+}
+
+
+.client-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
+}
+
+.client-input {
+  width: 80%;
+  outline: none;
+}
+
+.ant-input:hover, .ant-input:focus {
+  border-color: #30021E;
+}
+
+.submit-btn {
+  color: #ffffff;
+  background-color:#30021E;
+  margin-top: 1.2em;
+}
+
+.ant-btn:active, .ant-btn.active, .ant-btn:focus, .ant-btn:hover{
+  color: #30021E;
+  border-color: #30021E;
 }
