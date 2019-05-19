@@ -86,6 +86,7 @@ class App extends Component {
     const genExtra = () => (
       <Icon
         type="download"
+        className="control-items"
         onClick={event => {
           event.stopPropagation();
         }}
@@ -122,8 +123,8 @@ class App extends Component {
           <Panel header="Mavis Couture" key="1" extra={genExtra()}>
             <div className="nums-controls">
               <div className='max-btn'>
-                <Tag onClick={() => this.getMinMax('Max')} color={ minMax === 'Max' && '#30021E' }>Max</Tag>
-                <Tag onClick={() => this.getMinMax('Min')} color={ minMax === 'Min' && '#30021E' }>Min</Tag>
+                <Tag className='minmax-tag' onClick={() => this.getMinMax('Max')} color={ minMax === 'Max' && '#30021E' }>Max</Tag>
+                <Tag className='minmax-tag' onClick={() => this.getMinMax('Min')} color={ minMax === 'Min' && '#30021E' }>Min</Tag>
                 {minMaxValue && <Tag closable onClose={this.clearMinMax}>{ '0' + minMaxValue}</Tag>}
               </div>
               <div>
@@ -143,7 +144,7 @@ class App extends Component {
 
   renderNumbers() {
     const { generatedNumbers } = this.state;
-    return generatedNumbers.map(number => <Tag key={number}>{ "0" + number }</Tag>);
+    return generatedNumbers.map(number => <Tag className='num' key={number}>{ "0" + number }</Tag>);
   }
 
   render() {
@@ -159,7 +160,7 @@ class App extends Component {
           </header>
           <main>
             <section className="stat-section">
-              <p className="stat-text">Phone numbers generated till date: {totalGenerated}</p>
+              <p className="stat-text">Phone numbers generated to date: {totalGenerated}</p>
             </section>
             <section className="number-section">
               {this.generatedNumbers()}
